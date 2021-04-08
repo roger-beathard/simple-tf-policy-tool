@@ -57,6 +57,22 @@ After the json plan is generated run the python script to validate the plan agai
 ```bash
 python main.py examples/plan.json
 ```
+After running the above command you should see the following errors emitted:
+```
+google_bigquery_dataset dataset_no_cmek : BigQuery must use CMEK for dictionary value @ data['google_bigquery_dataset']['default_encryption_configuration']
+google_compute_subnetwork subnet-with-no-logging : Subnets must have VPC Flow Logs enabled for dictionary value @ data['google_compute_subnetwork']['log_config']
+google_game_services_game_server_cluster default : Forbidden resource for dictionary value @ data['google_game_services_game_server_cluster']
+google_healthcare_dataset default : Forbidden resource for dictionary value @ data['google_healthcare_dataset']
+google_kms_key_ring asia : Key Ring location must be within specific regions for dictionary value @ data['google_kms_key_ring']['location']
+google_kms_key_ring us-bad : Key Ring location must be within specific regions for dictionary value @ data['google_kms_key_ring']['location']
+google_project project_missing_label : expected a dictionary for dictionary value @ data['google_project']['labels']
+google_redis_instance redis_no_ha : Redis instance must be in HA configuration for dictionary value @ data['google_redis_instance']['tier']
+google_sql_database_instance instance_with_replication_type : required key not provided @ data['google_sql_database_instance']['settings'][0]['backup_configuration']
+google_sql_database_instance sql_no_key : required key not provided @ data['google_sql_database_instance']['settings'][0]['backup_configuration']
+google_storage_bucket bucket : expected a dictionary for dictionary value @ data['google_storage_bucket']['labels']
+google_storage_bucket bucket_no_cmek : length of value must be at least 1 for dictionary value @ data['google_storage_bucket']['encryption']
+```
+
 
 ## Design
 
@@ -134,7 +150,7 @@ def valid_project_id(project_id):
 
 ### Objects within Objects
 In the following resource definition:
-```json
+```python
 resource "google_project" "project" {
   name       = "My Project"
   project_id = "apex-docmgmt-dev-1111"
