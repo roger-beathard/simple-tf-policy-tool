@@ -46,7 +46,7 @@ python main.py plan.json --warn
 
 ## Demo
 
-To test, first run `terraform init` in the `examples` directory to init terraform. In the `examples` directory run the `make_plan.sh` to generate a json version of the plan. The `make_plan.sh` script does the following:
+To test, first run `terraform init` in the `tf_examples` directory to init terraform. In the `tf_examples` directory run the `make_plan.sh` to generate a json version of the plan. The `make_plan.sh` script does the following:
 ```bash
 terraform plan -out plan.bin > /dev/null
 terraform show -json plan.bin > plan.json
@@ -55,7 +55,7 @@ rm plan.bin
 
 After the json plan is generated run the python script to validate the plan against the configured policy:
 ```bash
-python main.py examples/plan.json
+python main.py tf_examples/plan.json
 ```
 After running the above command you should see the following errors emitted:
 ```
